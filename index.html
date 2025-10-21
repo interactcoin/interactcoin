@@ -1,153 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interact Coin – Servir é Nosso Superpoder</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-  html { scroll-behavior: smooth; }
-  .fade-in { opacity: 0; transform: translateY(-10px); animation: fadeIn 1.2s ease forwards; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
-  .hidden { display:none; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interact Coin | Interact Club de São Paulo Butantã</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; color: #222; background: #f5f6fa; }
+    header, section { padding: 80px 20px; text-align: center; }
+    header { background: linear-gradient(135deg, #0077b6, #00b4d8); color: #fff; }
+    header h1 { font-size: 2.5rem; margin-bottom: 20px; }
+    header p { font-size: 1.2rem; }
+    .section-title { font-size: 2rem; color: #0077b6; margin-bottom: 30px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .highlight { color: #00b4d8; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    table th, table td { border: 1px solid #ccc; padding: 10px; }
+    table th { background: #0077b6; color: #fff; }
+    iframe { width: 100%; border: none; border-radius: 10px; }
+    footer { background: #001f3f; color: #fff; padding: 40px 20px; text-align: center; }
+  </style>
 </head>
-<body class="bg-gradient-to-b from-white via-indigo-50 to-indigo-100 text-gray-900">
-
-  <!-- Alerta de erro -->
-  <div id="errorBar" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
-    <strong>Ops!</strong> Não consegui carregar os dados do painel agora. Mostrando dados de exemplo.
-  </div>
-
-  <!-- Cabeçalho -->
-  <header class="bg-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center p-4 fade-in">
-      <div class="flex items-center space-x-3">
-        <img src="https://drive.google.com/uc?export=view&id=1X-ZhbL82LkiyIJ6_RY7fhaDkOqhAM7O2" alt="Logo Interact Club de São Paulo Butantã" class="h-12" loading="eager">
-        <span class="text-xl font-extrabold text-indigo-700">Interact Coin</span>
-        <span class="text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">beta</span>
-      </div>
-      <nav class="hidden md:flex space-x-6 text-sm font-medium">
-        <a href="#o-que-e" class="hover:text-indigo-600">O que é</a>
-        <a href="#painel" class="hover:text-indigo-600">Painel</a>
-        <a href="#participar" class="hover:text-indigo-600">Participar</a>
-      </nav>
-    </div>
+<body>
+  <header>
+    <h1>💙 Interact Coin</h1>
+    <p>Invista no futuro, doe com propósito e transforme horas em impacto! ⏳💰</p>
   </header>
 
-  <!-- Hero -->
-  <section class="text-center py-20 bg-gradient-to-b from-indigo-100 to-white fade-in">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-4">Já pensou em transformar suas horas de trabalho voluntário em investimento na Fundação Rotária? ⚡</h1>
-    <p class="max-w-2xl mx-auto text-lg text-gray-700 mb-6">O <strong>Interact Coin</strong> conecta o seu tempo, talento e energia a um propósito maior. Cada hora servida é convertida em um impacto real — um jeito moderno e divertido de viver o lema rotário: <strong>Dar de si antes de pensar em si</strong>.</p>
-    <div class="flex justify-center gap-3">
-      <a href="#participar" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700">Quero participar</a>
-      <a href="#painel" class="bg-white border border-indigo-200 text-indigo-700 px-6 py-3 rounded-full hover:bg-indigo-50">Ver painel</a>
+  <section id="sobre">
+    <div class="container">
+      <h2 class="section-title">O que é o Interact Coin?</h2>
+      <p>O <strong>Interact Coin</strong> é o novo jeito de transformar suas <span class="highlight">horas de voluntariado</span> em investimento real na <strong>Fundação Rotária</strong>! 💎<br><br>
+      Cada hora de serviço prestado vira uma <strong>Interact Coin</strong> — e o melhor: você não doa nada! Quem doa é o <strong>Interact Club de São Paulo Butantã</strong>, convertendo cada hora registrada em <strong>R$0,10</strong> para o <em>Fundo Anual da Fundação Rotária</em>. 💸<br><br>
+      Seu esforço vira doação, e sua dedicação move o mundo. 🌍</p>
     </div>
   </section>
 
-  <!-- O que é -->
-  <section id="o-que-e" class="max-w-6xl mx-auto py-16 px-4 fade-in">
-    <h2 class="text-3xl font-bold text-center text-indigo-700 mb-6">O que é o Interact Coin?</h2>
-    <p class="max-w-3xl mx-auto text-center text-gray-700 mb-6">
-      O <strong>Interact Coin</strong> é uma iniciativa criada pelo <strong>Interact Club de São Paulo Butantã</strong> para transformar o espírito de servir em uma corrente de generosidade real.
-      A cada hora de trabalho voluntário ou doação direta registrada, o clube destinará <strong>R$ 0,10</strong> ao <strong>Fundo Anual da Fundação Rotária</strong>.
-      Quem participa não paga absolutamente nada — o investimento é feito pelo próprio <strong>Interact Club de São Paulo Butantã</strong> como forma de valorizar o seu ato de servir. 💙
-    </p>
-    <p class="max-w-3xl mx-auto text-center text-gray-600">
-      Assim, o que antes era apenas tempo doado, agora se transforma também em recursos para projetos humanitários, bolsas de estudo e ações globais promovidas pela Fundação Rotária.
-    </p>
-  </section>
-
-  <!-- Painel -->
-  <section id="painel" class="max-w-6xl mx-auto py-16 px-4 fade-in">
-    <h2 class="text-3xl font-bold text-center text-indigo-700 mb-4">Painel Interact Coin</h2>
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow mb-10">
-      <div class="grid md:grid-cols-2 gap-6 text-center">
-        <div>
-          <h3 class="text-lg font-semibold text-gray-600 mb-2">Total de Interact Coins</h3>
-          <div id="coinsTotal" class="text-4xl font-extrabold text-indigo-700">0 Coins</div>
-          <div id="coinsBRL" class="text-lg text-gray-700 mt-1">R$ 0,00</div>
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-gray-600 mb-2">Total de Horas de Voluntariado</h3>
-          <div id="hoursTotal" class="text-4xl font-extrabold text-indigo-700">0h</div>
-          <p class="text-sm text-gray-500 mt-1">Somando o tempo doado por todos os Interacts.</p>
-        </div>
-      </div>
-      <p class="text-xs text-center text-gray-500 mt-6">1 Coin = R$ 0,10 (doado ao Fundo Anual da Fundação Rotária)</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-      <div class="bg-white p-6 rounded-2xl shadow">
-        <h3 class="text-lg font-bold text-indigo-700 mb-4 text-center">🏆 Top 5 Clubes com mais Interact Coins</h3>
-        <canvas id="topClubsChart"></canvas>
-      </div>
-      <div class="bg-white p-6 rounded-2xl shadow">
-        <h3 class="text-lg font-bold text-indigo-700 mb-4 text-center">💪 Top 5 Pessoas com mais Interact Coins</h3>
-        <canvas id="topPeopleChart"></canvas>
-      </div>
+  <section id="painel">
+    <div class="container">
+      <h2 class="section-title">Painel de Impacto</h2>
+      <p>Acompanhe em tempo real o quanto já arrecadamos juntos! 🚀</p>
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0gEJ1EzwXTuQX8rScsfF6DqC0GiR2RmyiKpC2jEeVUsqSvK-V5bQiX1zPHCTg_xm8xvWM2SvvJz3J/pubhtml?gid=0&single=true"></iframe>
     </div>
   </section>
 
-  <!-- Formulário -->
-  <section id="participar" class="bg-indigo-600 text-white py-16 fade-in">
-    <div class="max-w-5xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-extrabold mb-3">Participe do Interact Coin 💠</h2>
-      <p class="opacity-95 mb-6 max-w-2xl mx-auto">
-        Preencha o formulário abaixo para registrar suas horas ou doações. O Interact Club de São Paulo Butantã destinará R$ 0,10 por hora servida ao Fundo Anual da Fundação Rotária. Você não paga nada, o investimento é feito por nós!
-      </p>
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-2">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhMaizFvX5egP98oBFVvj7teRGNoeOQf9qU3G29M-_9rabcQ/viewform?embedded=true"
-                width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
-      </div>
-      <p class="mt-6 text-xs opacity-80">Transparência total: registros aprovados pelo clube. Pequenas ações, grandes resultados.</p>
+  <section id="ranking">
+    <div class="container">
+      <h2 class="section-title">Ranking dos Clubes e Interactianos 🔥</h2>
+      <p>Confira os <strong>5 clubes</strong> e <strong>5 pessoas</strong> que mais contribuíram com horas de serviço e doações indiretas! 🏆</p>
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0gEJ1EzwXTuQX8rScsfF6DqC0GiR2RmyiKpC2jEeVUsqSvK-V5bQiX1zPHCTg_xm8xvWM2SvvJz3J/pubhtml?gid=1&single=true"></iframe>
     </div>
   </section>
 
-  <footer class="bg-indigo-900 text-white py-8 text-center">
-    <p>© 2025 Interact Coin – feito por jovens que servem.</p>
-    <p class="mt-2 opacity-80">Cada hora servida é uma semente de transformação. 🌱</p>
+  <section id="cadastro">
+    <div class="container">
+      <h2 class="section-title">Cadastre suas horas 💪</h2>
+      <p>Registre suas horas de voluntariado e ajude o Interact Butantã a multiplicar o bem. Nenhuma doação será cobrada de você — o investimento é nosso, o impacto é de todos. 💙</p>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhMaizFvX5egP98oBFVvj7teRGNoeOQf9qU3G29M-_9rabcQ/viewform?embedded=true" height="900"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>💙 Interact Club de São Paulo Butantã | Inspirando serviço, amizade e impacto global.</p>
+    <p>Rotary International © 2025</p>
   </footer>
-
-  <script>
-<script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbxDkywtGk1bJ3sEqvEGm22P-UrqIlTIVkX-ai0TErJeu_aWAqm9-eFX0l8k7FfwjcBbiQ/exec"; // Novo endpoint vinculado à planilha 1ysB0l0Um2w6GT3ODqTsHHG08a5UbFBD4WV28SITtsV4
-  const RATE = 0.10; // R$ 0,10 por hora/doação
-
-    async function updatePanel() {
-      try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-
-        document.getElementById("coinsTotal").textContent = `${data.totalCoins.toLocaleString('pt-BR')} Coins`;
-        document.getElementById("coinsBRL").textContent = (data.totalCoins * RATE).toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
-        document.getElementById("hoursTotal").textContent = `${data.totalHoras.toLocaleString('pt-BR')}h`;
-
-        new Chart(document.getElementById('topClubsChart'), {
-          type: 'bar',
-          data: {
-            labels: data.topClubs.map(c => c.nome),
-            datasets: [{ label: 'Interact Coins', data: data.topClubs.map(c => c.coins), backgroundColor: '#4f46e5' }]
-          },
-          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-        });
-
-        new Chart(document.getElementById('topPeopleChart'), {
-          type: 'bar',
-          data: {
-            labels: data.topPeople.map(p => p.nome),
-            datasets: [{ label: 'Interact Coins', data: data.topPeople.map(p => p.coins), backgroundColor: '#818cf8' }]
-          },
-          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-        });
-      } catch (err) {
-        console.error('Erro ao carregar dados', err);
-        document.getElementById('errorBar').classList.remove('hidden');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', updatePanel);
-  </script>
 </body>
 </html>
