@@ -17,7 +17,7 @@
 
   <!-- Alerta de erro -->
   <div id="errorBar" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
-    <strong>Ops!</strong> Não consegui carregar os dados do painel agora. Mostrando dados de exemplo. (Verifique o endpoint do Apps Script e as permissões públicas.)
+    <strong>Ops!</strong> Não consegui carregar os dados do painel agora. Mostrando dados de exemplo.
   </div>
 
   <!-- Cabeçalho -->
@@ -90,21 +90,17 @@
     </div>
   </section>
 
-  <!-- Formulário -->
+  <!-- Formulário (Google Forms incorporado) -->
   <section id="participar" class="bg-indigo-600 text-white py-16 fade-in">
-    <div class="max-w-4xl mx-auto px-4 text-center">
+    <div class="max-w-5xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-extrabold mb-3">Participe do Interact Coin 💠</h2>
       <p class="opacity-95 mb-6 max-w-2xl mx-auto">
-        Preencha o formulário abaixo e registre sua contribuição. Você pode adicionar o link de uma foto pública do projeto (Instagram, Google Fotos ou Google Drive compartilhável).
+        Preencha o formulário abaixo para registrar suas horas ou doações. O Interact Club de São Paulo Butantã destinará R$ 0,10 por hora servida ao Fundo Anual da Fundação Rotária. Você não paga nada, o investimento é feito por nós!
       </p>
-      <form id="coinForm" class="bg-white text-gray-800 p-6 rounded-2xl shadow-md space-y-4 max-w-lg mx-auto">
-        <input type="text" name="nome" placeholder="Nome completo" required class="w-full border p-2 rounded">
-        <input type="text" name="clube" placeholder="Clube (Ex.: Interact Club de São Paulo Butantã)" required class="w-full border p-2 rounded">
-        <input type="text" name="distrito" placeholder="Distrito (Ex.: 4563)" required class="w-full border p-2 rounded">
-        <input type="number" name="horas" placeholder="Horas de voluntariado ou valor doado (R$)" step="0.1" required class="w-full border p-2 rounded">
-        <input type="url" name="imagemURL" placeholder="Link da imagem do projeto (Instagram, Google Fotos, Drive...)" class="w-full border p-2 rounded">
-        <button class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">Enviar registro</button>
-      </form>
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-2">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhMaizFvX5egP98oBFVvj7teRGNoeOQf9qU3G29M-_9rabcQ/viewform?embedded=true"
+                width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
+      </div>
       <p class="mt-6 text-xs opacity-80">Transparência total: registros aprovados pelo clube. Pequenas ações, grandes resultados.</p>
     </div>
   </section>
@@ -148,29 +144,6 @@
         document.getElementById('errorBar').classList.remove('hidden');
       }
     }
-
-    document.getElementById("coinForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = Object.fromEntries(new FormData(e.target).entries());
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
-        });
-        const result = await res.json();
-        if (result.ok) {
-          alert("✅ Registro enviado com sucesso!");
-          e.target.reset();
-          updatePanel();
-        } else {
-          alert("❌ Não foi possível enviar. Verifique sua conexão ou permissões.");
-        }
-      } catch (err) {
-        alert("❌ Não foi possível enviar. Verifique sua conexão ou permissões.");
-        console.error(err);
-      }
-    });
 
     document.addEventListener('DOMContentLoaded', updatePanel);
   </script>
