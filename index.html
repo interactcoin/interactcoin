@@ -95,5 +95,84 @@
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-extrabold mb-3">Participe do Interact Coin 💠</h2>
       <p class="opacity-95 mb-6 max-w-2xl mx-auto">
-        Pree
+        Preencha o formulário abaixo e registre sua contribuição. Você pode adicionar o link de uma foto pública do projeto (Instagram, Google Fotos ou Google Drive compartilhável).
+      </p>
+      <form id="coinForm" class="bg-white text-gray-800 p-6 rounded-2xl shadow-md space-y-4 max-w-lg mx-auto">
+        <input type="text" name="nome" placeholder="Nome completo" required class="w-full border p-2 rounded">
+        <input type="text" name="clube" placeholder="Clube (Ex.: Interact Club de São Paulo Butantã)" required class="w-full border p-2 rounded">
+        <input type="text" name="distrito" placeholder="Distrito (Ex.: 4563)" required class="w-full border p-2 rounded">
+        <input type="number" name="horas" placeholder="Horas de voluntariado ou valor doado (R$)" step="0.1" required class="w-full border p-2 rounded">
+        <input type="url" name="imagemURL" placeholder="Link da imagem do projeto (Instagram, Google Fotos, Drive...)" class="w-full border p-2 rounded">
+        <button class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">Enviar registro</button>
+      </form>
+      <p class="mt-6 text-xs opacity-80">Transparência total: registros aprovados pelo clube. Pequenas ações, grandes resultados.</p>
+    </div>
+  </section>
 
+  <footer class="bg-indigo-900 text-white py-8 text-center">
+    <p>© 2025 Interact Coin – feito por jovens que servem.</p>
+    <p class="mt-2 opacity-80">Cada hora servida é uma semente de transformação. 🌱</p>
+  </footer>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyilsD4DMf1Rz4fKySBaETehXwckS2YjAZTATYMTt1f7DPs3jN1-EKL9_x7Vmeoctta7A/exec";
+    const RATE = 0.10;
+
+    async function updatePanel() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        document.getElementById("coinsTotal").textContent = `${data.totalCoins.toLocaleString('pt-BR')} Coins`;
+        document.getElementById("coinsBRL").textContent = (data.totalCoins * RATE).toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+        document.getElementById("hoursTotal").textContent = `${data.totalHoras.toLocaleString('pt-BR')}h`;
+
+        new Chart(document.getElementById('topClubsChart'), {
+          type: 'bar',
+          data: {
+            labels: data.topClubs.map(c => c.nome),
+            datasets: [{ label: 'Interact Coins', data: data.topClubs.map(c => c.coins), backgroundColor: '#4f46e5' }]
+          },
+          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        new Chart(document.getElementById('topPeopleChart'), {
+          type: 'bar',
+          data: {
+            labels: data.topPeople.map(p => p.nome),
+            datasets: [{ label: 'Interact Coins', data: data.topPeople.map(p => p.coins), backgroundColor: '#818cf8' }]
+          },
+          options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+      } catch (err) {
+        console.error('Erro ao carregar dados', err);
+        document.getElementById('errorBar').classList.remove('hidden');
+      }
+    }
+
+    document.getElementById("coinForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(e.target).entries());
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+        const result = await res.json();
+        if (result.ok) {
+          alert("✅ Registro enviado com sucesso!");
+          e.target.reset();
+          updatePanel();
+        } else {
+          alert("❌ Não foi possível enviar. Verifique sua conexão ou permissões.");
+        }
+      } catch (err) {
+        alert("❌ Não foi possível enviar. Verifique sua conexão ou permissões.");
+        console.error(err);
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', updatePanel);
+  </script>
+</body>
+</html>
