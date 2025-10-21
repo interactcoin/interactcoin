@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interact Coin | Interact Club de São Paulo Butantã</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; color: #222; background: #f5f6fa; }
@@ -13,11 +14,11 @@
     header p { font-size: 1.2rem; }
     .section-title { font-size: 2rem; color: #0077b6; margin-bottom: 30px; }
     .container { max-width: 1000px; margin: 0 auto; }
-    .highlight { color: #00b4d8; font-weight: 600; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    table th, table td { border: 1px solid #ccc; padding: 10px; }
-    table th { background: #0077b6; color: #fff; }
-    iframe { width: 100%; border: none; border-radius: 10px; }
+    .cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 40px; }
+    .card { background: #fff; border-radius: 15px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 250px; }
+    .card h3 { font-size: 1.2rem; color: #0077b6; margin-bottom: 15px; }
+    .card p { font-size: 2rem; font-weight: bold; color: #00b4d8; }
+    .icon { font-size: 2rem; margin-bottom: 10px; }
     footer { background: #001f3f; color: #fff; padding: 40px 20px; text-align: center; }
   </style>
 </head>
@@ -40,15 +41,23 @@
     <div class="container">
       <h2 class="section-title">Painel de Impacto</h2>
       <p>Acompanhe em tempo real o quanto já arrecadamos juntos! 🚀</p>
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0gEJ1EzwXTuQX8rScsfF6DqC0GiR2RmyiKpC2jEeVUsqSvK-V5bQiX1zPHCTg_xm8xvWM2SvvJz3J/pubhtml?gid=0&single=true"></iframe>
-    </div>
-  </section>
-
-  <section id="ranking">
-    <div class="container">
-      <h2 class="section-title">Ranking dos Clubes e Interactianos 🔥</h2>
-      <p>Confira os <strong>5 clubes</strong> e <strong>5 pessoas</strong> que mais contribuíram com horas de serviço e doações indiretas! 🏆</p>
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0gEJ1EzwXTuQX8rScsfF6DqC0GiR2RmyiKpC2jEeVUsqSvK-V5bQiX1zPHCTg_xm8xvWM2SvvJz3J/pubhtml?gid=1&single=true"></iframe>
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🪙</div>
+          <h3>Interact Coins</h3>
+          <p id="coins">0</p>
+        </div>
+        <div class="card">
+          <div class="icon">💰</div>
+          <h3>Dinheiro (R$)</h3>
+          <p id="dinheiro">R$ 0</p>
+        </div>
+        <div class="card">
+          <div class="icon">⏱️</div>
+          <h3>Horas de Serviço</h3>
+          <p id="horas">0</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -56,7 +65,7 @@
     <div class="container">
       <h2 class="section-title">Cadastre suas horas 💪</h2>
       <p>Registre suas horas de voluntariado e ajude o Interact Butantã a multiplicar o bem. Nenhuma doação será cobrada de você — o investimento é nosso, o impacto é de todos. 💙</p>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhMaizFvX5egP98oBFVvj7teRGNoeOQf9qU3G29M-_9rabcQ/viewform?embedded=true" height="900"></iframe>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfhMaizFvX5egP98oBFVvj7teRGNoeOQf9qU3G29M-_9rabcQ/viewform?embedded=true" height="900" style="width:100%; border:none; border-radius:10px;"></iframe>
     </div>
   </section>
 
@@ -64,5 +73,65 @@
     <p>💙 Interact Club de São Paulo Butantã | Inspirando serviço, amizade e impacto global.</p>
     <p>Rotary International © 2025</p>
   </footer>
+
+  <script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(loadData);
+
+    function loadData() {
+      const query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1ysB0l0Um2w6GT3ODqTsHHG08a5UbFBD4WV28SITtsV4/gviz/tq?sheet=Registros&range=I2:K2'
+      );
+      query.send(handleQueryResponse);
+    }
+
+    function handleQueryResponse(response) {
+      if (response.isError()) {
+        console.error('Erro ao carregar dados:', response.getMessage());
+        return;
+      }
+
+      const data = response.getDataTable();
+      const somaCoins = parseFloat(data.getValue(0, 0)) || 0;
+      const somaDinheiro = parseFloat(data.getValue(0, 1)) || 0;
+      const somaHoras = parseFloat(data.getValue(0, 2)) || 0;
+
+      animateValue('coins', 0, somaCoins, 1500);
+      animateMoney('dinheiro', 0, somaDinheiro, 1500);
+      animateValue('horas', 0, somaHoras, 1500);
+    }
+
+    function animateValue(id, start, end, duration) {
+      const obj = document.getElementById(id);
+      const range = end - start;
+      const stepTime = Math.max(Math.floor(duration / range), 50);
+      let startTime = new Date().getTime();
+      let endTime = startTime + duration;
+
+      const timer = setInterval(function () {
+        const now = new Date().getTime();
+        const remaining = Math.max((endTime - now) / duration, 0);
+        const value = Math.round(end - (remaining * range));
+        obj.textContent = value.toLocaleString('pt-BR');
+        if (value === end) clearInterval(timer);
+      }, stepTime);
+    }
+
+    function animateMoney(id, start, end, duration) {
+      const obj = document.getElementById(id);
+      const range = end - start;
+      const stepTime = Math.max(Math.floor(duration / range), 50);
+      let startTime = new Date().getTime();
+      let endTime = startTime + duration;
+
+      const timer = setInterval(function () {
+        const now = new Date().getTime();
+        const remaining = Math.max((endTime - now) / duration, 0);
+        const value = (end - (remaining * range)).toFixed(2);
+        obj.textContent = 'R$ ' + parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        if (parseFloat(value) === end) clearInterval(timer);
+      }, stepTime);
+    }
+  </script>
 </body>
 </html>
