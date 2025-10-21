@@ -43,6 +43,11 @@
       <p>Acompanhe em tempo real o quanto já arrecadamos juntos! 🚀</p>
       <div class="cards">
         <div class="card">
+          <div class="icon">⏱️</div>
+          <h3>Horas de Serviço</h3>
+          <p id="horas">0</p>
+        </div>
+        <div class="card">
           <div class="icon">🪙</div>
           <h3>Interact Coins</h3>
           <p id="coins">0</p>
@@ -51,11 +56,6 @@
           <div class="icon">💰</div>
           <h3>Dinheiro (R$)</h3>
           <p id="dinheiro">R$ 0</p>
-        </div>
-        <div class="card">
-          <div class="icon">⏱️</div>
-          <h3>Horas de Serviço</h3>
-          <p id="horas">0</p>
         </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
 
     function loadData() {
       const query = new google.visualization.Query(
-        'https://docs.google.com/spreadsheets/d/1ysB0l0Um2w6GT3ODqTsHHG08a5UbFBD4WV28SITtsV4/gviz/tq?sheet=Registros&range=I2:K2'
+        'https://docs.google.com/spreadsheets/d/16tVCcHGUkCWpbzAUPq-z4v3PpZQq_9o5ijd1C9y7Kas/gviz/tq?sheet=Respostas%20ao%20formul%C3%A1rio&range=G3:I3'
       );
       query.send(handleQueryResponse);
     }
@@ -92,13 +92,13 @@
       }
 
       const data = response.getDataTable();
-      const somaCoins = parseFloat(data.getValue(0, 0)) || 0;
-      const somaDinheiro = parseFloat(data.getValue(0, 1)) || 0;
-      const somaHoras = parseFloat(data.getValue(0, 2)) || 0;
+      const somaHoras = parseFloat(data.getValue(0, 0)) || 0;
+      const somaCoins = parseFloat(data.getValue(0, 1)) || 0;
+      const somaDinheiro = parseFloat(data.getValue(0, 2)) || 0;
 
+      animateValue('horas', 0, somaHoras, 1500);
       animateValue('coins', 0, somaCoins, 1500);
       animateMoney('dinheiro', 0, somaDinheiro, 1500);
-      animateValue('horas', 0, somaHoras, 1500);
     }
 
     function animateValue(id, start, end, duration) {
