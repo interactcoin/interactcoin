@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interact Coin – Servir é Nosso Superpoder</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-b from-white via-indigo-50 to-indigo-100 text-gray-900">
+
+<header class="bg-white shadow-lg sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+    <div class="flex items-center space-x-3">
+      <img src="https://drive.google.com/uc?export=view&id=1X-ZhbL82LkiyIJ6_RY7fhaDkOqhAM7O2" alt="Logo Interact Club de São Paulo Butantã" class="h-12">
+      <span class="text-xl font-extrabold text-indigo-700">Interact Coin</span>
+    </div>
+  </div>
+</header>
+
+<section class="text-center py-20 bg-gradient-to-b from-indigo-100 to-white">
+  <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-4">Já pensou em transformar suas horas de trabalho voluntário em investimento na Fundação Rotária?</h1>
+  <p class="max-w-2xl mx-auto text-lg text-gray-700 mb-6">O <strong>Interact Coin</strong> conecta o seu tempo, talento e energia a um propósito maior. Cada hora servida é convertida em um impacto real — um jeito moderno e divertido de viver o lema rotário: <strong>Dar de si antes de pensar em si</strong>.</p>
+  <a href="#participar" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700">Quero participar</a>
+</section>
+
+<section id="o-que-e" class="max-w-6xl mx-auto py-16 px-4">
+  <h2 class="text-3xl font-bold text-center text-indigo-700 mb-6">O que é o Interact Coin?</h2>
+  <p class="max-w-3xl mx-auto text-center text-gray-700">O <strong>Interact Coin</strong> é uma iniciativa criada pelo <strong>Interact Club de São Paulo Butantã</strong> para transformar o espírito de servir em uma corrente de generosidade real. A cada hora de trabalho voluntário ou doação direta registrada, o clube destinará <strong>R$ 0,10</strong> ao <strong>Fundo Anual da Fundação Rotária</strong>. Quem participa não paga absolutamente nada — o investimento é feito pelo próprio <strong>Interact Club de São Paulo Butantã</strong> como forma de valorizar o seu ato de servir. 💙</p>
+</section>
+
+<section id="painel" class="max-w-6xl mx-auto py-16 px-4">
+  <h2 class="text-3xl font-bold text-center text-indigo-700 mb-4">Painel Interact Coin</h2>
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow mb-10 text-center">
+    <h3 class="text-lg font-semibold text-gray-600 mb-2">Total de Interact Coins</h3>
+    <div id="coinsTotal" class="text-4xl font-extrabold text-indigo-700">0 Coins</div>
+    <div id="coinsBRL" class="text-lg text-gray-700 mt-1">R$ 0,00</div>
+    <h3 class="text-lg font-semibold text-gray-600 mt-6 mb-2">Total de Horas de Voluntariado</h3>
+    <div id="hoursTotal" class="text-4xl font-extrabold text-indigo-700">0h</div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+    <div class="bg-white p-6 rounded-2xl shadow">
+      <h3 class="text-lg font-bold text-indigo-700 mb-4 text-center">🏆 Top 5 Clubes</h3>
+      <canvas id="topClubsChart"></canvas>
+    </div>
+    <div class="bg-white p-6 rounded-2xl shadow">
+      <h3 class="text-lg font-bold text-indigo-700 mb-4 text-center">💪 Top 5 Pessoas</h3>
+      <canvas id="topPeopleChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="participar" class="bg-indigo-600 text-white py-16">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-extrabold mb-3">Participe do Interact Coin 💠</h2>
+    <form id="coinForm" class="bg-white text-gray-800 p-6 rounded-2xl shadow-md space-y-4 max-w-lg mx-auto">
+      <input type="text" name="nome" placeholder="Nome completo" required class="w-full border p-2 rounded">
+      <input type="text" name="clube" placeholder="Clube (Ex.: Interact Club de São Paulo Butantã)" required class="w-full border p-2 rounded">
+      <input type="text" name="distrito" placeholder="Distrito (Ex.: 4563)" required class="w-full border p-2 rounded">
+      <input type="number" name="horas" placeholder="Horas de voluntariado ou valor doado (R$)" step="0.1" required class="w-full border p-2 rounded">
+      <input type="url" name="imagemURL" placeholder="Link da imagem do projeto (Instagram, Google Fotos, Drive...)" class="w-full border p-2 rounded">
+      <button class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">Enviar registro</button>
+    </form>
+  </div>
+</section>
+
+<footer class="bg-indigo-900 text-white py-8 text-center">
+  <p>© 2025 Interact Coin – feito por jovens que servem.</p>
+</footer>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbyilsD4DMf1Rz4fKySBaETehXwckS2YjAZTATYMTt1f7DPs3jN1-EKL9_x7Vmeoctta7A/exec";
+  const RATE = 0.10;
+
+  async function updatePanel() {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      document.getElementById("coinsTotal").textContent = `${data.totalCoins.toLocaleString('pt-BR')} Coins`;
+      document.getElementById("coinsBRL").textContent = (data.totalCoins * RATE).toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+      document.getElementById("hoursTotal").textContent = `${data.totalHoras.toLocaleString('pt-BR')}h`;
+
+      new Chart(document.getElementById('topClubsChart'), {
+        type: 'bar',
+        data: { labels: data.topClubs.map(c => c.nome), datasets: [{ data: data.topClubs.map(c => c.coins), backgroundColor: '#4f46e5' }] },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+
+      new Chart(document.getElementById('topPeopleChart'), {
+        type: 'bar',
+        data: { labels: data.topPeople.map(p => p.nome), datasets: [{ data: data.topPeople.map(p => p.coins), backgroundColor: '#818cf8' }] },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    } catch (err) {
+      console.error('Erro ao carregar dados', err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updatePanel);
+</script>
+</body>
+</html>"}
