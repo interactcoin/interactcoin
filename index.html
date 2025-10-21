@@ -97,7 +97,35 @@
     }
   }
 
+  // Envio do formulário (POST)
+  document.getElementById('coinForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await res.json();
+      if (result.ok) {
+        alert('✅ Registro enviado com sucesso!');
+        e.target.reset();
+        updatePanel();
+      } else {
+        throw new Error(result.message || 'Erro ao enviar');
+      }
+    } catch (err) {
+      console.error('Erro ao enviar dados:', err);
+      alert('❌ Não foi possível enviar. Verifique sua conexão ou permissões.');
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', updatePanel);
 </script>
+
 </body>
-</html>"}
+</html>
