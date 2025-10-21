@@ -90,7 +90,7 @@
     </div>
   </section>
 
-  <!-- Formulário (Google Forms incorporado) -->
+  <!-- Formulário -->
   <section id="participar" class="bg-indigo-600 text-white py-16 fade-in">
     <div class="max-w-5xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-extrabold mb-3">Participe do Interact Coin 💠</h2>
@@ -111,13 +111,14 @@
   </footer>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyilsD4DMf1Rz4fKySBaETehXwckS2YjAZTATYMTt1f7DPs3jN1-EKL9_x7Vmeoctta7A/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxDkywtGk1bJ3sEqvEGm22P-UrqIlTIVkX-ai0TErJeu_aWAqm9-eFX0l8k7FfwjcBbiQ/exec";
     const RATE = 0.10;
 
     async function updatePanel() {
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
+
         document.getElementById("coinsTotal").textContent = `${data.totalCoins.toLocaleString('pt-BR')} Coins`;
         document.getElementById("coinsBRL").textContent = (data.totalCoins * RATE).toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
         document.getElementById("hoursTotal").textContent = `${data.totalHoras.toLocaleString('pt-BR')}h`;
