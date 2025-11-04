@@ -28,9 +28,9 @@
     <p>O <strong>Interact Coins</strong> é uma iniciativa do <strong>Interact Club de São Paulo Butantã</strong> que transforma o voluntariado em uma verdadeira <strong>economia do bem</strong>.<br><br>
     Cada hora dedicada, cada gesto solidário e cada ação em prol da comunidade se convertem em <strong>coins</strong>, uma moeda simbólica que mede o impacto de quem serve com propósito.<br><br>
     Mas o valor não é apenas simbólico: <strong>cada coin equivale a R$ 0,10</strong>, doados pelo <strong>Interact Club de São Paulo Butantã</strong> ao <strong>Fundo Anual da Fundação Rotária</strong>.<br><br>
-    É como se o clube “comprasse” as horas de serviço dos interactianos e as transformasse em <strong>investimento para o bem comum</strong>, apoiando causas globais como saúde, educação, paz e saneamento básico — multiplicando o poder de cada boa ação.<br><br>
+    É como se o clube “comprasse” as horas de serviço de seus associados e as transformasse em <strong>investimento para o bem comum</strong>, apoiando causas globais como saúde, educação, paz e saneamento básico — multiplicando o poder de cada boa ação.<br><br>
     Mais do que um sistema de pontuação, o <strong>Interact Coins</strong> é uma nova forma de enxergar o protagonismo jovem e o poder transformador do servir.<br><br>
-    Aqui, a moeda que circula é o <strong>bem</strong> — e o lucro é o <strong>impacto que deixamos no mundo</strong>. 🪙</p>
+    Aqui, a moeda que circula é o <strong>bem</strong> — e o lucro é o <strong>impacto que deixamos no mundo</strong>. 💙</p>
   </header>
 
   <section id="premiacao">
@@ -75,17 +75,19 @@
   </section>
 
   <footer>
-    <p>Interact Club de São Paulo Butantã | Inspirando serviço, amizade e impacto global.</p>
+    <p>💙 Interact Club de São Paulo Butantã | Inspirando serviço, amizade e impacto global.</p>
     <p>Rotary International © 2025</p>
   </footer>
 
   <script>
+    // Carrega a API
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(loadData);
 
     function loadData() {
+      // Lê exclusivamente as células A1 (horas), B1 (coins), C1 (reais) da aba "site"
       const query = new google.visualization.Query(
-        'https://docs.google.com/spreadsheets/d/16tVCcHGUkCWpbzAUPq-z4v3PpZQq_9o5ijd1C9y7Kas/gviz/tq?sheet=Respostas%20ao%20formul%C3%A1rio&range=G3:I3'
+        'https://docs.google.com/spreadsheets/d/16tVCcHGUkCWpbzAUPq-z4v3PpZQq_9o5ijd1C9y7Kas/gviz/tq?sheet=site&range=A1:C1'
       );
       query.send(handleQueryResponse);
     }
@@ -95,11 +97,11 @@
         console.error('Erro ao carregar dados:', response.getMessage());
         return;
       }
-
       const data = response.getDataTable();
-      const somaHoras = parseFloat(data.getValue(0, 0)) || 0;
-      const somaCoins = parseFloat(data.getValue(0, 1)) || 0;
-      const somaDinheiro = parseFloat(data.getValue(0, 2)) || 0;
+      // Mapeamento exato solicitado: A1=horas, B1=coins, C1=reais (considerar centavos)
+      const somaHoras   = parseFloat(data.getValue(0, 0)) || 0;
+      const somaCoins   = parseFloat(data.getValue(0, 1)) || 0;
+      const somaDinheiro= parseFloat(data.getValue(0, 2)) || 0;
 
       animateValue('horas', 0, somaHoras, 1500);
       animateValue('coins', 0, somaCoins, 1500);
@@ -109,15 +111,14 @@
     function animateValue(id, start, end, duration) {
       const obj = document.getElementById(id);
       const range = end - start;
-      const stepTime = Math.max(Math.floor(duration / range), 50);
-      let startTime = new Date().getTime();
-      let endTime = startTime + duration;
-
-      const timer = setInterval(function () {
-        const now = new Date().getTime();
+      const stepTime = Math.max(Math.floor(duration / Math.max(range, 1)), 20);
+      const startTime = Date.now();
+      const endTime = startTime + duration;
+      const timer = setInterval(() => {
+        const now = Date.now();
         const remaining = Math.max((endTime - now) / duration, 0);
         const value = Math.round(end - (remaining * range));
-        obj.textContent = value.toLocaleString('pt-BR');
+        obj.textContent = Number(value).toLocaleString('pt-BR');
         if (value === end) clearInterval(timer);
       }, stepTime);
     }
@@ -125,16 +126,15 @@
     function animateMoney(id, start, end, duration) {
       const obj = document.getElementById(id);
       const range = end - start;
-      const stepTime = Math.max(Math.floor(duration / range), 50);
-      let startTime = new Date().getTime();
-      let endTime = startTime + duration;
-
-      const timer = setInterval(function () {
-        const now = new Date().getTime();
+      const stepTime = Math.max(Math.floor(duration / 60), 20);
+      const startTime = Date.now();
+      const endTime = startTime + duration;
+      const timer = setInterval(() => {
+        const now = Date.now();
         const remaining = Math.max((endTime - now) / duration, 0);
-        const value = (end - (remaining * range)).toFixed(2);
-        obj.textContent = 'R$ ' + parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        if (parseFloat(value) === end) clearInterval(timer);
+        const current = end - (remaining * range);
+        obj.textContent = 'R$ ' + Number(current).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (remaining === 0) clearInterval(timer);
       }, stepTime);
     }
   </script>
